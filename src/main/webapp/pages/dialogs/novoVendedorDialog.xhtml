@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+<h:form id="formVendedor">
+							<div class="form-group">
+								<p:tabView>
+									<p:tab title="Dados">
+										
+										<p:panelGrid columns="4" styleClass="companyHeaderGrid">
+											<label for="nome" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Nome</label>
+											<p:inputText styleClass="col-xs-12 col-md-10" value="#{loteController.novoVendedor.nome}" />
+											
+											<label for="situacao" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Situação</label>
+											<b:selectOneMenu style="width:125px" required="true" requiredMessage="Situação obrigatório"
+													value="#{loteController.novoVendedor.situacao}">
+													<f:selectItem itemLabel="--" itemValue="" />
+													<f:selectItem itemLabel="Indefinido" itemValue="INDEFINIDO" />
+													<f:selectItem itemLabel="Verde" itemValue="VERDE" />
+													<f:selectItem itemLabel="Amarelo" itemValue="AMARELO" />
+													<f:selectItem itemLabel="Vermelho" itemValue="VERMELHO" />
+												</b:selectOneMenu>
+												
+											<label for="apelido" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Apelido</label>
+											<p:inputText id="apelido" styleClass="col-md-10 col-xs-12" value="#{loteController.novoVendedor.apelido}" />
+											
+											<label for="cpf" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">CPF/CGC</label>
+											<p:inputText id="cpf" styleClass="col-xs-12" value="#{loteController.novoVendedor.cpfcgc}"></p:inputText>
+											
+											<label for="endereco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Endereço</label>
+											<p:inputText id="endereco" styleClass="col-md-10 col-xs-12" value="#{loteController.novoVendedor.endereco}" />
+											
+											<label for="bairro" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Bairro</label>
+											<p:inputText id="bairro" styleClass="col-xs-12" value="#{loteController.novoVendedor.bairro}" ></p:inputText>
+											
+											<label for="cidade" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Cidade</label>
+											<p:inputText id="cidade" styleClass="col-md-5 col-xs-12" value="#{loteController.novoVendedor.cidade}" />
+											
+											<label for="cep" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">CEP</label>
+											<p:inputMask mask="99999-999" id="cep" styleClass="col-xs-12" value="#{loteController.novoVendedor.cep}"></p:inputMask>
+											
+											<label for="uf" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">UF</label>
+											
+											<b:selectOneMenu style="width:125px" id="uf" required="true" requiredMessage="UF obrigatório"
+												value="#{loteController.novoVendedor.uf}">
+												<f:selectItem itemLabel="--" itemValue="" />
+												<f:selectItem itemLabel="AC" itemValue="AC" />
+												<f:selectItem itemLabel="AL" itemValue="AL" />
+												<f:selectItem itemLabel="AP" itemValue="AP" />
+												<f:selectItem itemLabel="AM" itemValue="AM" />
+												<f:selectItem itemLabel="BA" itemValue="BA" />
+												<f:selectItem itemLabel="CE" itemValue="CE" />
+												<f:selectItem itemLabel="DF" itemValue="DF" />
+												<f:selectItem itemLabel="ES" itemValue="ES" />
+												<f:selectItem itemLabel="GO" itemValue="GO" />
+												<f:selectItem itemLabel="MA" itemValue="MA" />
+												<f:selectItem itemLabel="MT" itemValue="MT" />
+												<f:selectItem itemLabel="MS" itemValue="MS" />
+												<f:selectItem itemLabel="MG" itemValue="MG" />
+												<f:selectItem itemLabel="PR" itemValue="PR" />
+												<f:selectItem itemLabel="PB" itemValue="PB" />
+												<f:selectItem itemLabel="PA" itemValue="PA" />
+												<f:selectItem itemLabel="PE" itemValue="PE" />
+												<f:selectItem itemLabel="PI" itemValue="PI" />
+												<f:selectItem itemLabel="RJ" itemValue="RJ" />
+												<f:selectItem itemLabel="RN" itemValue="RN" />
+												<f:selectItem itemLabel="RS" itemValue="RS" />
+												<f:selectItem itemLabel="RO" itemValue="RO" />
+												<f:selectItem itemLabel="SC" itemValue="SC" />
+												<f:selectItem itemLabel="SE" itemValue="SE" />
+												<f:selectItem itemLabel="SP" itemValue="SP" />
+												<f:selectItem itemLabel="TO" itemValue="TO" />
+											</b:selectOneMenu>
+												
+											<label for="email" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Email</label>
+											<p:inputText id="email" styleClass="col-xs-12 col-md-10" value="#{loteController.novoVendedor.email}" ></p:inputText>
+											
+											<label for="telefone1" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Fone</label>
+											<p:inputText  id="telefone1" styleClass="col-xs-12" value="#{loteController.novoVendedor.fone}" />
+											
+											<label for="email2" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Email-2</label>
+											<p:inputText id="email2" styleClass="col-xs-12 col-md-10" value="#{loteController.novoVendedor.email2}" ></p:inputText>
+											
+											<label for="telefone2" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Fone-2</label>
+											<p:inputText id="telefone2" styleClass="col-xs-12" value="#{loteController.novoVendedor.fone2}" />
+											
+											<label for="fax" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Fax</label>
+											<p:inputText id="fax" styleClass="col-xs-12 col-md-5" value="#{loteController.novoVendedor.fax}" />
+											
+											<label for="residencial" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Residencial</label>
+											<p:inputText id="residencial" styleClass="col-xs-12" value="#{loteController.novoVendedor.foneResidencial}" />
+											
+											<label for="comercial" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Comercial</label>
+											<p:inputText id="comercial" styleClass="col-xs-12 col-md-5" value="#{loteController.novoVendedor.foneComercial}" />
+										</p:panelGrid>
+
+											
+									</p:tab>
+									<p:tab title="Animais que cria">
+										<div>
+											<p:commandButton value="Novo" icon="ui-icon-plus" onclick="PF('dlgVendedorRaca').show();"></p:commandButton>
+										</div>
+										<p:outputPanel autoUpdate="true">
+											<p:dataTable var="raca" id="tabelaAnimaisQueCria" value="#{loteController.novoVendedor.animaisQueCria}"
+												paginator="true" paginatorPosition="bottom" rows="5"
+												style="margin-top:20px">
+												<f:facet name="header">
+		            								Lista de Raças
+		        								</f:facet>
+												<p:column headerText="Nome">
+													<h:outputText value="#{raca.nome}" />
+												</p:column>
+												<p:column headerText="Tipo">
+													<h:outputText value="#{raca.tipoCriacao}" />
+												</p:column>
+												<p:column headerText="Ação" styleClass="col-md-2">
+													<center>
+														<p:commandButton icon="ui-icon-pencil"></p:commandButton>
+														<p:commandButton icon="ui-icon-trash" action="#{vendedorController.removeAnimaisQueCria()}">
+															<f:setPropertyActionListener value="#{raca.id}" target="#{vendedorController.racaBean.id}"></f:setPropertyActionListener>
+														</p:commandButton>
+														
+													</center>
+												</p:column>
+											</p:dataTable>
+										</p:outputPanel>
+									</p:tab>
+									<p:tab title="Dados bancários/Fazenda">
+										<div class="row">
+											<p class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-primary">Dados da fazenda</p>
+										</div>
+										<div class="row">
+											<label for="nomeBanco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Nome</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="nomeBanco" styleClass="col-xs-12 col-md-10" />
+											</div>
+											<label  class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label"></label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+											</div>
+										</div>
+										<div class="row">
+											<label for="enderecoBanco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Endereço</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="enderecoBanco" styleClass="col-xs-12 col-md-10" />
+											</div>
+											<label for="cidadeBanco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Cidade</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="cidadeBanco" styleClass="col-xs-12 col-md-10" />
+											</div>
+										</div>
+										<div class="row">
+											<label for="ie" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">IE</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="ie" styleClass="col-xs-12 col-md-5" />
+											</div>
+										</div> <hr/>
+										<p:commandButton value="Nova Conta" icon="ui-icon-plus" onclick="PF('dlgContaCorrente').show();"></p:commandButton>
+										<p:dataTable id="tabelaContaCorrente" var="conta" value="#{loteController.novoVendedor.contasCorrentes}">
+											<f:facet name="header">
+		            								Lista de contas
+		        								</f:facet>
+											<p:column headerText="Banco">
+												<h:outputText value="#{conta.banco.descricao}" />
+											</p:column>
+											<p:column headerText="Agência">
+												<h:outputText value="#{conta.agencia}" />
+											</p:column>
+											<p:column headerText="Conta Corrente">
+												<h:outputText value="#{conta.contaCorrente}" />
+											</p:column>
+											<p:column headerText="Ação" styleClass="col-md-2">
+												<center>
+													<p:commandButton icon="ui-icon-pencil"></p:commandButton>
+													<p:commandButton icon="ui-icon-trash"></p:commandButton>
+												</center>
+											</p:column>
+										</p:dataTable>
+												
+									</p:tab>
+								</p:tabView> 
+								<hr/>
+								
+								<div class="col-sm-offset-2">
+									<b:commandButton value="Salvar" look="success" action="#{loteController.novoVendedor()}" />
+									<a href="list.faces" class="btn btn-default">Cancelar</a>
+								</div>
+							</div>
+						</h:form>		
+ </h:body>
+ </html>

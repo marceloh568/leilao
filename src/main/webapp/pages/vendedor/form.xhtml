@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+			
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{vendedorController.getEditVendedor()}" />
+			</f:metadata>
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h:panelGroup rendered="#{param['id'] == null}">
+								<h4>Cadastro Comprador/Vendedor</h4>
+						</h:panelGroup>  
+						<h:panelGroup rendered="#{param['id'] != null}">
+								<h4>Editar Comprador/Vendedor</h4>
+						</h:panelGroup> 
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<h:form id="formVendedor">
+							<div class="form-group">
+								<p:tabView>
+									<p:tab title="Dados">
+										<div class="row">
+											<label for="nome" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Nome</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="nome" styleClass="col-xs-12 col-md-10" value="#{vendedorController.vendedorBean.nome}" />
+											</div>
+											<label for="situacao" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Situação</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<b:selectOneMenu style="width:125px" id="situacao" required="true" requiredMessage="Situação obrigatório"
+													value="#{vendedorController.vendedorBean.situacao}">
+													<f:selectItem itemLabel="--" itemValue="" />
+													<f:selectItem itemLabel="Indefinido" itemValue="INDEFINIDO" />
+													<f:selectItem itemLabel="Verde" itemValue="VERDE" />
+													<f:selectItem itemLabel="Amarelo" itemValue="AMARELO" />
+													<f:selectItem itemLabel="Vermelho" itemValue="VERMELHO" />
+												</b:selectOneMenu>
+												<p:message for="situacao"></p:message>
+											</div>
+										</div>
+										
+										<div class="row">
+											<label for="apelido" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Apelido</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="apelido" styleClass="col-md-10 col-xs-12" value="#{vendedorController.vendedorBean.apelido}" />
+											</div>
+											<label for="cpf" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">CPF/CGC</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="cpf" styleClass="col-xs-12" value="#{vendedorController.vendedorBean.cpfcgc}"></p:inputText>
+											</div>
+										</div>
+										
+										<div class="row">
+											<label for="endereco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Endereço</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="endereco" styleClass="col-md-10 col-xs-12" value="#{vendedorController.vendedorBean.endereco}" />
+											</div>
+											<label for="bairro" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Bairro</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="bairro" styleClass="col-xs-12" value="#{vendedorController.vendedorBean.bairro}" ></p:inputText>
+											</div>
+										</div>
+										
+										<div class="row">
+											<label for="cidade" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Cidade</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="cidade" styleClass="col-md-5 col-xs-12" value="#{vendedorController.vendedorBean.cidade}" />
+											</div>
+											<label for="cep" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">CEP</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputMask mask="99999-999" id="cep" styleClass="col-xs-12" value="#{vendedorController.vendedorBean.cep}"></p:inputMask>
+											</div>
+										</div>
+										<div class="row">
+											<label for="uf" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">UF</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<b:selectOneMenu style="width:125px" id="uf" required="true" requiredMessage="UF obrigatório"
+													value="#{vendedorController.vendedorBean.uf}">
+													<f:selectItem itemLabel="--" itemValue="" />
+													<f:selectItem itemLabel="AC" itemValue="AC" />
+													<f:selectItem itemLabel="AL" itemValue="AL" />
+													<f:selectItem itemLabel="AP" itemValue="AP" />
+													<f:selectItem itemLabel="AM" itemValue="AM" />
+													<f:selectItem itemLabel="BA" itemValue="BA" />
+													<f:selectItem itemLabel="CE" itemValue="CE" />
+													<f:selectItem itemLabel="DF" itemValue="DF" />
+													<f:selectItem itemLabel="ES" itemValue="ES" />
+													<f:selectItem itemLabel="GO" itemValue="GO" />
+													<f:selectItem itemLabel="MA" itemValue="MA" />
+													<f:selectItem itemLabel="MT" itemValue="MT" />
+													<f:selectItem itemLabel="MS" itemValue="MS" />
+													<f:selectItem itemLabel="MG" itemValue="MG" />
+													<f:selectItem itemLabel="PR" itemValue="PR" />
+													<f:selectItem itemLabel="PB" itemValue="PB" />
+													<f:selectItem itemLabel="PA" itemValue="PA" />
+													<f:selectItem itemLabel="PE" itemValue="PE" />
+													<f:selectItem itemLabel="PI" itemValue="PI" />
+													<f:selectItem itemLabel="RJ" itemValue="RJ" />
+													<f:selectItem itemLabel="RN" itemValue="RN" />
+													<f:selectItem itemLabel="RS" itemValue="RS" />
+													<f:selectItem itemLabel="RO" itemValue="RO" />
+													<f:selectItem itemLabel="SC" itemValue="SC" />
+													<f:selectItem itemLabel="SE" itemValue="SE" />
+													<f:selectItem itemLabel="SP" itemValue="SP" />
+													<f:selectItem itemLabel="TO" itemValue="TO" />
+												</b:selectOneMenu>
+												<p:message for="uf"></p:message>
+											</div>
+											
+										</div>
+										<div class="row">
+											<p class="col-xs-12 col-sm-1 col-md-1 col-lg-1 text-primary">Contato</p>
+										</div>
+										<div class="row">
+											<label for="email" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Email</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="email" styleClass="col-xs-12 col-md-10" value="#{vendedorController.vendedorBean.email}" ></p:inputText>
+											</div>
+											<label for="telefone1" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Fone</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText  id="telefone1" styleClass="col-xs-12" value="#{vendedorController.vendedorBean.fone}" />
+											</div>
+										</div>
+										<div class="row">
+											<label for="email2" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Email-2</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="email2" styleClass="col-xs-12 col-md-10" value="#{vendedorController.vendedorBean.email2}" ></p:inputText>
+											</div>
+											<label for="telefone2" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Fone-2</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="telefone2" styleClass="col-xs-12" value="#{vendedorController.vendedorBean.fone2}" />
+											</div>
+										</div>
+										<div class="row">
+											<label for="fax" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Fax</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="fax" styleClass="col-xs-12 col-md-5" value="#{vendedorController.vendedorBean.fax}" />
+											</div>
+											<label for="residencial" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Residencial</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="residencial" styleClass="col-xs-12" value="#{vendedorController.vendedorBean.foneResidencial}" />
+											</div>
+										</div>
+										<div class="row">
+											<label for="comercial" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Comercial</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="comercial" styleClass="col-xs-12 col-md-5" value="#{vendedorController.vendedorBean.foneComercial}" />
+											</div>
+										</div><br/>
+									</p:tab>
+									<p:tab title="Animais que cria">
+										<div>
+											<p:commandButton value="Novo" icon="ui-icon-plus" onclick="PF('dlgVendedorRaca').show();"></p:commandButton>
+										</div>
+										<p:outputPanel autoUpdate="true">
+											<p:dataTable var="raca" id="tabelaAnimaisQueCria" value="#{vendedorController.vendedorBean.animaisQueCria}"
+												paginator="true" paginatorPosition="bottom" rows="5"
+												style="margin-top:20px">
+												<f:facet name="header">
+		            								Lista de Raças
+		        								</f:facet>
+												<p:column headerText="Nome">
+													<h:outputText value="#{raca.nome}" />
+												</p:column>
+												<p:column headerText="Tipo">
+													<h:outputText value="#{raca.tipoCriacao}" />
+												</p:column>
+												<p:column headerText="Ação" styleClass="col-md-2">
+													<center>
+														<p:commandButton icon="ui-icon-pencil"></p:commandButton>
+														<p:commandButton icon="ui-icon-trash" action="#{vendedorController.removeAnimaisQueCria()}">
+															<f:setPropertyActionListener value="#{raca.id}" target="#{vendedorController.racaBean.id}"></f:setPropertyActionListener>
+														</p:commandButton>
+														
+													</center>
+												</p:column>
+											</p:dataTable>
+										</p:outputPanel>
+									</p:tab>
+									<p:tab title="Dados bancários/Fazenda">
+										<div class="row">
+											<p class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-primary">Dados da fazenda</p>
+										</div>
+										<div class="row">
+											<label for="nomeBanco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Nome</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="nomeBanco" styleClass="col-xs-12 col-md-10" />
+											</div>
+											<label  class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label"></label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+											</div>
+										</div>
+										<div class="row">
+											<label for="enderecoBanco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Endereço</label>
+											<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+												<p:inputText id="enderecoBanco" styleClass="col-xs-12 col-md-10" />
+											</div>
+											<label for="cidadeBanco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Cidade</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="cidadeBanco" styleClass="col-xs-12 col-md-10" />
+											</div>
+										</div>
+										<div class="row">
+											<label for="ie" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">IE</label>
+											<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+												<p:inputText id="ie" styleClass="col-xs-12 col-md-5" />
+											</div>
+										</div> <hr/>
+										<p:commandButton value="Nova Conta" icon="ui-icon-plus" onclick="PF('dlgContaCorrente').show();"></p:commandButton>
+										<p:dataTable id="tabelaContaCorrente" var="conta" value="#{vendedorController.vendedorBean.contasCorrentes}">
+											<f:facet name="header">
+		            								Lista de contas
+		        								</f:facet>
+											<p:column headerText="Banco">
+												<h:outputText value="#{conta.banco.descricao}" />
+											</p:column>
+											<p:column headerText="Agência">
+												<h:outputText value="#{conta.agencia}" />
+											</p:column>
+											<p:column headerText="Conta Corrente">
+												<h:outputText value="#{conta.contaCorrente}" />
+											</p:column>
+											<p:column headerText="Ação" styleClass="col-md-2">
+												<center>
+													<p:commandButton icon="ui-icon-pencil"></p:commandButton>
+													<p:commandButton icon="ui-icon-trash"></p:commandButton>
+												</center>
+											</p:column>
+										</p:dataTable>
+												
+									</p:tab>
+								</p:tabView> 
+								<hr/>
+								
+								<div class="col-sm-offset-2">
+									<b:commandButton value="Salvar" look="success" action="#{vendedorController.salvar()}" />
+									<a href="list.faces" class="btn btn-default">Cancelar</a>
+								</div>
+							</div>
+						</h:form>		
+						
+						<p:dialog id="dialog-raca" widgetVar="dlgVendedorRaca" modal="true" header="Adicionar">
+						<h:form>
+								<div class="modal-body">
+									<div class="row">
+										<label for="ie" class="col-xs-12 control-label">Raça</label>
+										<div class="col-xs-12">
+											<p:selectOneMenu value="#{vendedorController.racaBean.id}" id="selectRaca" filter="true" filterMatchMode="startsWith">
+													<f:selectItems value="#{racaController.findAll()}" var="raca" itemLabel="#{raca.nome}" itemValue="#{raca.id}" ></f:selectItems>
+											</p:selectOneMenu>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<b:commandButton value="Cancelar"></b:commandButton>
+									<b:commandButton action="#{vendedorController.adicionarAnimaisQueCria()}" value="Salvar" look="primary"  />
+								</div>
+								</h:form>
+						</p:dialog>
+						
+						<p:dialog id="dialog-conta" widgetVar="dlgContaCorrente" modal="true" header="Adicionar" >
+						<h:form>
+							<div class="row">
+								<label for="banco" class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Banco</label>
+								<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+									<p:selectOneMenu value="#{vendedorController.contaCorrente.banco.id}" id="selectBanco">
+													<f:selectItems value="#{bancoController.findAll()}" var="banco" itemLabel="#{banco.descricao}" itemValue="#{banco.id}" ></f:selectItems>
+									</p:selectOneMenu>
+								</div>
+								<label for="agencia" class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Agência</label>
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+									<p:inputText id="agencia" value="#{vendedorController.contaCorrente.agencia}" styleClass="col-xs-12" />
+								</div>
+							</div>
+							<div class="row">
+								<label for="titular"
+									class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">Titular</label>
+								<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+									<p:inputText id="titular" value="#{vendedorController.contaCorrente.titular}" styleClass="col-xs-12 col-md-10"></p:inputText>
+								</div>
+								<label for="numeroConta"
+									class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">NºConta</label>
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+									<p:inputText id="numeroConta" value="#{vendedorController.contaCorrente.contaCorrente}" styleClass="col-xs-12" />
+								</div>
+							</div>
+							<hr/>
+							<div>
+								<center>
+									<b:commandButton value="Cancelar" />
+									<b:commandButton style="margin-left:3px;" value="Salvar" look="primary" action="#{vendedorController.adicionarContaCorrente()}" />
+								</center>
+							</div>
+							</h:form>
+						</p:dialog>
+						
+					</div>
+				</div>
+			</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

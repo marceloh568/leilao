@@ -1,0 +1,333 @@
+/*
+    Author: Emerson Gama
+    Since: 17/11/2014
+*/
+
+/* CSS Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit; //
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset para navegadores antigos */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section
+{
+    display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    line-height: 1;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    font-family: arial !important;
+}
+
+ol,ul {
+    list-style: none;
+}
+
+blockquote,q {
+    quotes: none;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* Fim CSS Reset */
+html {
+    height: 100%;
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary
+{
+    display: block;
+}
+
+.wrapper {
+    width: 100%;
+    min-width: 1000px;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+    height: 50px;
+    background: #704214 !important;
+    color: white; //
+    font-weight: bold;
+}
+
+.logo {
+    float: left;
+    display: block !important;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 86px !important;
+    height: 86px !important;
+}
+
+.versao {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.nomeSis {
+    float: left;
+    position: relative;
+    margin-top: -5px;
+    margin-left: 10px; //
+    font-size: 20px;
+}
+
+.desc { //
+        font-size: 14px; //
+        padding-top: -4px !important;
+}
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.content {
+
+}
+
+.avisos {
+    width: 400px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+    margin: -30px auto 0;
+    min-width: 1000px;
+    height: 30px;
+    background: #704214 !important;
+    position: relative;
+}
+
+.connect {
+    float: left;
+    display: inline-block;
+    padding-top: 7px;
+    padding-left: 7px;
+}
+
+.direitos {
+    float: right;
+    margin-top: 7px;
+    margin-right: 7px;
+    color: white;
+}
+
+/* Conf. PrimeFaces
+-----------------------------------------------------------------------------*/
+.ui-datepicker select.ui-datepicker-month,.ui-datepicker select.ui-datepicker-year
+{
+    color: #000000;
+}
+
+.ui-widget {
+    font-family: arial !important;
+    font-size: 11px !important;
+    font-weight: normal !important;
+}
+
+.ui-menu .ui-menu-parent .ui-menu-child {
+    width: 230px;
+}
+
+.semBorda tr,semBorda row,.semBorda td {
+    border: none !important;
+}
+
+/* Outros
+-----------------------------------------------------------------------------*/
+.menu { //
+        background-color: #f2f1f1 !important; //
+        background: #f2f1f1 !important;
+        border-radius: 0 0 0 0 !important;
+        margin-bottom: 20px !important;
+}
+
+.sistemas { //
+            font-size: 62.5%;
+            width: 1178px; //
+            width: auto; //
+            height: 800px;
+            height: 600px; //
+            height: auto;
+            margin: 30px auto 20px auto;
+            padding-left: 1.315789474%;
+            text-align: center;
+            float: none;
+}
+
+.sistemas-opc { //
+                background-color: #f0ffff !important;
+                background-color: #eeeeee !important;
+                font-size: 12px !important;
+                font-weight: bold !important;
+                height: 200px !important;
+}
+
+.sistemas-opc-bt {
+    background-color: #eeeeee !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    margin-top: -21px;
+}
+
+.rowGreen td {
+    background-color: rgba(91, 183, 91, 0.3);
+}
+
+.rowRed td {
+    background-color: rgba(218, 79, 73, 0.3);
+}
+
+.rowOrange td {
+    background-color: orange;
+}
+
+
+.rowYellow td {
+	background-color: rgba(221, 177, 2, 0.3);
+}
+
+.rowBlue td {
+	background-color: rgba(000, 000, 255, 0.3);
+}
+
+.rowPurple td {
+	background-color: rgba(160, 032, 240, 0.3);
+}
+
+.rowTeal td {
+	background-color: rgba(40, 166, 202, 0.3);
+}
+
+.rowDarkGreen td {
+	background-color: rgba(29, 113, 19, 0.5);
+}
+
+.rowGreen td:hover {
+    background-color: rgb(91, 183, 91);
+}
+
+.rowRed td:hover {
+    background-color: rgb(218, 79, 73);
+}
+
+.rowYellow td:hover {
+    background-color: rgb(221, 177, 2);
+}
+
+.rowBlue td:hover {
+    background-color: rgb(000, 000, 255);
+}
+
+.rowPurple td:hover {
+    background-color: rgb(160, 032, 240);
+}
+
+.rowTeal td:hover {
+    background-color: rgb(40, 166, 202);
+}
+
+.rowDarkGreen td:hover {
+    background-color: rgb(29, 113, 19);
+}
+
+.agendalivre {
+    color: black;
+    background: #4cae4c !important;
+}
+
+.agendaconfirmado {
+    color: black;
+    background: yellow !important;
+}
+
+
+.agendapresente {
+
+    background: red !important;
+    color: white;
+}
+
+.agendabloqueado {
+    background: teal !important;
+    color: white;
+}
+
+.agendaexecutado {
+    background: blue !important;
+    color: white;
+}
+
+.agendaatendimento {
+    background: purple !important;
+    color: white;
+}
+
+.agendaaviso {
+    background: #000080FF !important;
+    color: black;
+}
+
+#bemVindo {
+    width: auto;
+    margin: auto;
+}
+
+.menu-sistema {
+    border: 0px !important;
+    padding: 0px !important;
+    background: none !important;
+    margin-top: 9px;
+}
+
+/*.menu-sistema .ui-menu-parent>a .ui-menuitem-text,.menu-sistema>.ui-menu-list>.ui-menuitem>a>.ui-menuitem-text
+{
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-family: monospace;
+}*/
+
+.menu-sistema>.ui-menu-list>.ui-menuitem>a>.ui-menuitem-text
+{
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-family: monospace;
+}
+
+.menu-sistema .ui-icon-triangle-1-s {
+
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+    
+ <h:head>
+ 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+ </h:head>
+  
+
+    <ui:composition template="../../template/templatesistemas.xhtml">
+        <ui:define name="body">
+         <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <div class="jumbotron">
+            <h2>Bem vindo ao Agreste Leilão</h2>
+            <p>Este sistema foi criado para tornar possível, através da web, o gerenciamento de leilões. Você precisará especificar as raças, compradores, lotes e outros dados. Você quer tentar?</p>
+          	<a class="btn btn-lg btn-primary" href="../leilao/form.faces" role="button">Novo Leilão </a>
+          	<a class="btn btn-lg btn-primary" style="background-color:#9760b3;" href="selectLeilao.faces" role="button">Meus Leilões »</a>
+          </div>
+        </div><!--/.col-xs-12.col-sm-9-->
+        <div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">Leilões Recentes</a>
+            
+            <ui:repeat var="leilao" value="#{leilaoController.findAll()}" varStatus="status">
+            	<a href="../leilao/form.faces?id=#{leilao.id}" class="list-group-item">#{leilao.nome}</a>
+            	
+            	<h:panelGroup rendered="#{status.index == null}">
+            		 &nbsp;&nbsp;&nbsp;&nbsp;<b>Nenhum leilão cadastrado</b>
+            		 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../leilao/list.faces">Novo leilão</a>
+            	</h:panelGroup>
+            	
+            </ui:repeat>
+          </div>
+          <a href="../leilao/list.faces">Ver todos</a>
+        </div><!--/.sidebar-offcanvas-->
+        
+        
+        <div class="row">
+	        <div class="col-xs-12 col-md-4">
+	          <h2>Raça</h2>
+	          <p>Esta versão contém um espaço para gerir raças.</p>
+	          <p><a class="btn btn-default" href="../raca/list.faces" role="button">Ver Detalhes &raquo;</a></p>
+	        </div>
+	        <div class="col-xs-12 col-md-4">
+	          <h2>Animal</h2>
+	          <p>Esta versão contém um espaço para gerir animais.</p>
+	          <p><a class="btn btn-default" href="../animal/list.faces" role="button">Ver Detalhes &raquo;</a></p>
+	       </div>
+	        <div class="col-xs-12 col-md-4">
+	          <h2>Banco</h2>
+	          <p>Esta versão contém um espaço para gerir Bancos.</p>
+	          <p><a class="btn btn-default" href="../banco/list.faces" role="button">Ver Detalhes &raquo;</a></p>
+	        </div>
+      </div>
+        
+       </ui:define>
+    </ui:composition>
+</html>

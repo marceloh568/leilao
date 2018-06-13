@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ <h:body>
+	<ui:composition template="../../template/templateLeilao.xhtml">
+		<ui:define name="conteudo">
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{loteController.setNumeroLote()}" />
+			</f:metadata>
+			<script type="text/javascript">
+				$(function(){
+					$("#liLote").addClass("active");
+				});
+			</script>
+			
+			<h:form id="formLote">
+				<p:growl id="grwgeral" showDetail="true" sticky="true" />	
+				<p:outputPanel autoUpdate="true">
+				</p:outputPanel>
+				<p:outputPanel id="outlotes" rendered="#{loteController.visaoDoHistoricoDeLotes}" autoUpdate="true">
+					<b:commandButton value="Novo Lote" icon="plus" actionListener="#{loteController.novoLote()}" immediate="true" update=":mainFormtempSist:formLote:outtab"/> <hr/>
+					<table id="tabelaRaca" class="table table table-bordered" style="width:95%;">
+						<caption>Histórico de lotes</caption>
+						<thead>
+							<tr>
+								<th>Nº Lote</th>
+								<th>Data da Compra</th>
+								<th>Vendedores</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<ui:repeat var="lote" value="#{loteController.findLotesLeilao()}" varStatus="status">
+							<tr>
+								<td>#{lote.numero}</td>
+								<td>#{lote.dataCompra}</td>
+								<td> -vendedor- </td>
+								<td>
+									<b:commandButton id="btnSelecionaLote" value="" icon="pencil" action="#{loteController.selecionarLote()}" process="@this" update=":formLote:outtab">
+										<f:setPropertyActionListener value="#{lote.id}" target="#{loteController.loteBean.id}"></f:setPropertyActionListener>
+									</b:commandButton>
+									<b:commandButton icon="trash" value="" onclick="PF('dlgExcluirLote').show();return false;">
+										<f:setPropertyActionListener value="#{lote.id}" target="#{loteController.loteBean.id}"></f:setPropertyActionListener>				
+									</b:commandButton>
+								</td>
+							</tr>
+						</ui:repeat>
+					</table>
+				</p:outputPanel>
+
+				<p:tabView id="tabView" rendered="#{loteController.visaoDosDadosDoLote}">
+					<p:tab title="Dados do lote">
+							<hr/>
+							<div class="row">
+								<div class="col-md-5">
+										<div class="panel panel-info" style="height:305px !important;">
+											<div class="panel-heading">Geral</div>
+											<div class="panel-body">
+												<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
+													<h:outputText value="Nº do lote"></h:outputText>
+													<p:inputText id="numero"  value="#{loteController.loteBean.numero}" styleClass="ui-grid-col-2"></p:inputText>
+													<h:outputText value="Preposto"></h:outputText>
+													<p:inputText id="preposto" value="#{loteController.loteBean.preposto}" styleClass="ui-grid-col-10"></p:inputText>
+													<h:outputText value="Observações"></h:outputText>
+													<p:inputTextarea value="#{loteController.loteBean.observacao}" styleClass="ui-grid-col-10"></p:inputTextarea>	
+												</p:panelGrid>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-7">
+										<div class="panel panel-info">
+											<div class="panel-heading">Vendedores</div>
+												<div class="panel-body">
+													<p:panelGrid columns="3" styleClass="companyHeaderGrid">
+														
+														<h:outputText value="Incluir Vendedor"></h:outputText>
+														<p:autoComplete value="#{loteController.vendedorSelect}" id="complvend"  size="30"
+																 completeMethod="#{loteController.completeVendedor}" effect="fade" converter="conVendedor"
+																 var="theme" forceSelection="false"  itemValue="#{theme}" itemLabel="#{theme.nome}" >
+							 										<p:ajax event="itemSelect" listener="#{loteController.onItemSelectVendedor}" />
+							  			     			 </p:autoComplete>
+														<p:commandButton id="btnaddvend" icon="ui-icon-plus"  style="margin-left:5px;" action="#{loteController.adicionaVendedorLista()}" update="complvend outvend" process="@this">
+															<p:tooltip for="btnaddvend" value="Incluir Vendedor no Lote"></p:tooltip>
+														</p:commandButton>
+														
+														<h:outputText value="CPF"></h:outputText>
+														<p:inputText value="#{loteController.buscaCPFVendedor}"></p:inputText>
+														<p:commandButton icon="ui-icon-search" action="#{loteController.adicionarVendedorListaPorCPF()}" update="complvend outvend :formLote:grwgeral"></p:commandButton>
+														
+													</p:panelGrid> <hr/>
+													
+													<a href="#" onclick="PF('novoVendedorDlg').show();">Novo Vendedor</a>
+													<p:outputPanel id="outvend">
+														<p:dataTable var="vend" scrollable="true" emptyMessage="Nenhum Vendedor" scrollHeight="100" value="#{loteController.loteBean.listaDeVendedores}" style="margin-top:20px">
+															<f:facet name="header">
+												            	Lista de Vendedores
+												        	</f:facet>
+															<p:column headerText="Nome">
+																<h:outputText value="#{vend.nome}" />
+															</p:column>
+															<p:column headerText="%">
+																<h:outputText value="#{vend.percentual}" />
+															</p:column>
+															<p:column headerText="Ação" styleClass="col-md-2">
+																<center>
+																	<p:commandButton icon="ui-icon-trash" action="#{loteController.removerVendedorDaLista()}" update=":formLote:tabView:outvend">
+																		<f:setPropertyActionListener value="#{vend}" target="#{loteController.vendedorSelect}"></f:setPropertyActionListener>
+																	</p:commandButton>
+																</center>
+															</p:column>
+														</p:dataTable>
+													</p:outputPanel>
+											</div>
+										</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel panel-info">
+									<div class="panel-heading">Animais</div>
+										<div class="panel-body">
+												<p:outputPanel id="outdadosanimal">
+			 									<p:tabView id="tabFormAnimal">
+													<p:tab title="Dados">
+														<div class="ui-fluid">
+							   			 				 <p:panelGrid columns="4" styleClass="companyHeaderGrid">
+															<h:outputText value="Nome"></h:outputText>
+															<p:autoComplete id="acMinLength" itemtipAtPosition="0" minQueryLength="1" value="#{loteController.animalSelect}"  
+																	    completeMethod="#{loteController.completeText}" effect="fade" converter="conAnimal" 
+								 										var="theme" forceSelection="false" itemValue="#{theme}" itemLabel="#{theme.nome}" >
+								 										<p:ajax event="itemSelect" listener="#{loteController.onItemSelectAnimal}" update=":formLote:tabView:outdadosanimal"/>
+								    
+								   					 	    </p:autoComplete>
+									
+															<h:outputText value="Raça"></h:outputText>
+															<p:selectOneMenu  value="#{loteController.animalSelect.racaBean.id}" >
+															<f:selectItem itemLabel="" itemValue="" />
+																<f:selectItems value="#{racaController.findAll()}" var="raca" itemLabel="#{raca.nome}" itemValue="#{raca.id}"></f:selectItems>
+															</p:selectOneMenu>
+														
+														 
+															<h:outputText value="Pelagem"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.pelagem}" />
+														
+															<h:outputText value="Nascimento"></h:outputText>
+															<p:calendar value="#{loteController.animalSelect.dataNascimento}" />
+														
+															<h:outputText value="Nº Registro"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.numeroDeRegistro}" />
+												
+															<h:outputText value="Nº Controle"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.numeroDeControle}" />
+						
+															<h:outputText value="Sexo"></h:outputText>
+															<p:selectOneRadio value="#{loteController.animalSelect.sexo}">
+																<f:selectItem itemLabel="Masculino" itemValue="M" />
+																<f:selectItem itemLabel="Feminino" itemValue="F" />
+															</p:selectOneRadio>
+						
+															<h:outputText value="Criador"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.criador}" />
+						
+														</p:panelGrid>
+														<p:panelGrid columns="2" styleClass="companyHeaderGrid" style="margin-top:20px;">
+															<p:commandButton icon="ui-icon-plus" update=":formLote:grwgeral" value="Incluir animal" action="#{loteController.adicionaAnimalLista()}" />
+														</p:panelGrid>
+													</div>
+												</p:tab>
+												<p:tab title="Genealogia">
+													<div class="row">
+														<p class="col-md-offset-1 col-xs-12 col-sm-3 col-md-3 col-lg-3 text-primary">Geneologia Pai</p>
+													</div>
+													<div class="ui-fluid">
+				   			 			 				<p:panelGrid columns="4" styleClass="companyHeaderGrid">
+															<h:outputText value="Pai"></h:outputText>
+														    <p:autoComplete value="#{loteController.animalSelect.geneologiaPai.pai}" 
+															  					completeMethod="#{loteController.completeTextPai}" />
+															
+															<h:outputText value="Avô"></h:outputText>
+														    <p:autoComplete value="#{loteController.animalSelect.geneologiaPai.avoMasculino}" 
+															  					completeMethod="#{loteController.completeTextAvoPai}" />
+															
+															<h:outputText value="Avó"></h:outputText>
+														    <p:autoComplete value="#{loteController.animalSelect.geneologiaPai.avoFeminino}" 
+															  					completeMethod="#{loteController.completeTextAvoFPai}" />
+												
+															<h:outputText value="Bisavô"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.geneologiaPai.bisavoMasculino}" />
+				
+															<h:outputText value="Bisavó"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.geneologiaPai.bisavoFeminino}" />
+														</p:panelGrid>
+													
+														<div class="row">
+															<p class="col-md-offset-1 col-xs-12 col-sm-3 col-md-3 col-lg-3 text-primary">Geneologia Mãe</p>
+														</div>
+														
+														<p:panelGrid columns="4" styleClass="companyHeaderGrid">
+															<h:outputText value="Mãe"></h:outputText>
+														    <p:autoComplete value="#{loteController.animalSelect.geneologiaMae.mae}" 
+															  					completeMethod="#{loteController.completeTextMae}" />
+															
+															<h:outputText value="Avô"></h:outputText>
+														    <p:autoComplete value="#{loteController.animalSelect.geneologiaMae.avoMasculino}" 
+															  					completeMethod="#{loteController.completeTextAvoMae}" />
+												
+															<h:outputText value="Avó"></h:outputText>
+														    <p:autoComplete value="#{loteController.animalSelect.geneologiaMae.avoFemenino}" 
+															  					completeMethod="#{loteController.completeTextAvoFMae}" />
+															
+															<h:outputText value="Bisavô"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.geneologiaMae.bisavoMasculino}" />
+				
+															<h:outputText value="Bisavó"></h:outputText>
+															<p:inputText  value="#{loteController.animalSelect.geneologiaMae.bisavoFemenino}" />
+														</p:panelGrid>
+													</div>
+												</p:tab>
+											</p:tabView> 
+											<p:outputPanel id="outanim" autoUpdate="true">
+												<p:dataTable var="animal" scrollable="true" emptyMessage="Nenhum Animal" scrollHeight="100" value="#{loteController.loteBean.listaDeAnimais}" style="margin-top:20px">
+													<f:facet name="header">
+										            	Lista de animais
+										        	</f:facet>
+													<p:column headerText="Nome">
+														<h:outputText value="#{animal.nome}" />
+													</p:column>
+									
+													<p:column headerText="Criador">
+														<h:outputText value="#{animal.criador}" />
+													</p:column>
+									
+													<p:column headerText="Ação" styleClass="col-md-2">
+														<center>
+															<p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgNovoAnimal').show()" process="@this">
+															<f:setPropertyActionListener value="#{animal}" target="#{loteController.animaledit}"/>
+															</p:commandButton>
+															<p:commandButton icon="ui-icon-trash" action="#{loteController.removerAnimalDaLista()}">
+																<f:setPropertyActionListener value="#{animal}" target="#{loteController.animalSelect}"></f:setPropertyActionListener>
+															</p:commandButton>
+														</center>
+													</p:column>
+												</p:dataTable>
+											</p:outputPanel>
+										</p:outputPanel>
+									</div>
+								</div>
+							</div>
+						</div>
+				</p:tab>
+				<p:tab title="Dados da compra">
+						<hr/>
+						<div class="panel panel-default">
+							<div class="panel-body">
+							<div class="panel panel-default">
+			  					<div class="panel-heading">Dados da compra</div>
+									<div class="panel-body">
+										<p:panelGrid columns="4" styleClass="companyHeaderGrid"
+											id="pnlcompra">
+											<h:outputText value="Data da compra"></h:outputText>
+											<p:calendar id="dataCompra"
+												value="#{loteController.loteBean.dataCompra}"
+												pattern="dd/MM/yyyy">
+											</p:calendar>
+
+											<h:outputText value="Tipo da compra"></h:outputText>
+											<p:selectOneMenu style="width:125px" filter="true"
+												id="tipoCompra" filterMatchMode="startsWith"
+												value="#{loteController.loteBean.tipoCompra}">
+												<f:selectItem itemLabel="" itemValue="" />
+												<f:selectItem itemLabel="NORMAL" itemValue="N" />
+												<f:selectItem itemLabel="DEFESA" itemValue="D" />
+												<p:ajax listener="#{loteController.calcularParcelas2}"
+													process="dataCompra tipoCompra"
+													update=":formLote:tabView:pnlcompra "></p:ajax>
+											</p:selectOneMenu>
+	
+											<h:outputText value="Valor total"></h:outputText>
+											<p:inputText styleClass="col-md-8 col-xs-12" id="intot"
+												value="#{loteController.loteBean.valorTotal}">
+												<f:ajax execute="intot" event="blur"
+													listener="#{loteController.calculaTotalCompraPeloTotal()}"
+													render=":formLote:tabView:pnlcompra " />
+											</p:inputText>
+	
+											<h:outputText value="Valor do lance"></h:outputText>
+											<p:inputText id="invlrlance" styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.valorLance}">
+												<f:ajax execute="invlrlance" event="blur"
+													listener="#{loteController.calculaTotalCompraPeloLance()}"
+													render=":formLote:tabView:pnlcompra " />
+											</p:inputText>
+	
+											<h:outputText value="Nº de parcelas"></h:outputText>
+											<p:inputText id="innumparc" styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.numeroParcela}">
+												<f:ajax execute="innumparc" event="blur"
+													listener="#{loteController.calculaTotalCompraPelaParcela()}"
+													render=":formLote:tabView:pnlcompra " />
+											</p:inputText>
+	
+											<h:outputText value="Valor de desconto"></h:outputText>
+											<p:inputText styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.valorDesconto}" />
+	
+											<h:outputText value="Taxa de inscrição"></h:outputText>
+											<p:inputText styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.taxaInscricao}" />
+	
+											<h:outputText value="Taxa antecipada"></h:outputText>
+											<p:inputText styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.taxaAntecipada}" />
+	
+											<h:outputText value="Comissão do vendedor"></h:outputText>
+											<p:inputText styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.comissaoVendedor}" />
+	
+											<h:outputText value="Comissão do comprador"></h:outputText>
+											<p:inputText styleClass="col-md-8 col-xs-12"
+												value="#{loteController.loteBean.comissaoComprador}" />
+									</p:panelGrid>
+									<hr />
+<!-- 								<p:dataTable id="tabparccompra" var="parcela" value="#{loteController.loteBean.listacompras}" -->
+<!-- 									style="margin-top:20px"> -->
+<!-- 									<f:facet name="header"> -->
+<!--             							Número de parcelas geral -->
+<!--         							</f:facet> -->
+
+<!-- 									<p:column headerText="Data da compra"> -->
+<!-- 										<h:outputText value="#{parcela.dataDaCompra}"> -->
+<!-- 											<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> -->
+<!-- 										</h:outputText> -->
+<!-- 									</p:column> -->
+
+<!-- 									<p:column headerText="Valor da parcela"> -->
+<!-- 										<h:outputText value="#{parcela.valorDoLance}" /> -->
+<!-- 									</p:column> -->
+									
+<!-- 								</p:dataTable> <hr/> -->
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="panel panel-default">
+			  							<div class="panel-heading">Compradores</div>
+											<div class="panel-body">
+												<p:panelGrid columns="3" styleClass="companyHeaderGrid">
+											<h:outputText value="Incluir Comprador"></h:outputText>
+											<p:autoComplete value="#{loteController.compradorSelect}"
+												id="complcomp" size="40"
+												completeMethod="#{loteController.completeVendedor}"
+												effect="fade" converter="conVendedor" var="theme"
+												forceSelection="false" itemValue="#{theme}"
+												itemLabel="#{theme.nome}">
+												<p:ajax event="itemSelect"
+													listener="#{loteController.onItemSelectComprador}" />
+											</p:autoComplete>
+											<p:commandButton style="margin-left:5px;"
+												icon="ui-icon-plus" id="btnaddcomp"
+												action="#{loteController.adicionaCompradorLista()}"
+												update=":formLote:tabView:complcomp :formLote:tabView:outputPanelCompradores :formLote:grwgeral" process="@this">
+												<p:tooltip for="btnaddcomp"
+													value="Incluir Comprador do Lote"></p:tooltip>
+											</p:commandButton>
+											
+											<h:outputText value="CPF"></h:outputText>
+											<p:inputText value="#{loteController.buscaCPFVendedor}"></p:inputText>
+											<p:commandButton icon="ui-icon-search" action="#{loteController.adicionaCompradorListaPorCPF()}" update=":formLote:tabView:complcomp"></p:commandButton>
+														
+														
+											<a href="#" onclick="PF('novoCompradorDlg').show();">Novo Comprador</a>	
+														
+										</p:panelGrid>
+										<hr />
+										<b:commandButton value="Refazer Valores" look="primary" icon="refresh" size="xs" action="#{loteController.refazerCalculo()}" update=":formLote:tabView:complcomp"></b:commandButton> <hr/>
+										<p:outputPanel autoUpdate="false" id="outputPanelCompradores">
+											<p:accordionPanel
+												value="#{loteController.listaDeCompradoresLote}"
+												var="compradorLote">
+												<p:tab title="#{compradorLote.comprador.nome}">
+													<h:panelGrid columns="2" cellpadding="20">
+														<p:panelGrid columns="2" styleClass="companyHeaderGrid" id="panelDadosComprador">
+															<h:outputText value="Editar Comprador"></h:outputText>
+															<p:selectBooleanCheckbox value="#{compradorLote.editavel}">
+																<p:ajax update="panelDadosComprador"></p:ajax>
+															</p:selectBooleanCheckbox>
+															<h:outputText value="Valor do Lance"></h:outputText>
+															<p:inputText value="#{compradorLote.valorLance}" disabled="#{compradorLote.editavel == false}"></p:inputText>
+															<h:outputText value="Valor de desconto"></h:outputText>
+															<p:inputText value="#{compradorLote.valorDesconto}" disabled="#{compradorLote.editavel == false}"></p:inputText>
+															<h:outputText value="Nº de parcelas"></h:outputText>
+															<p:inputText value="#{compradorLote.numeroParcelas}" disabled="#{compradorLote.editavel == false}"></p:inputText>
+															<h:outputText value=""></h:outputText>
+															<b:commandButton value="Excluir este comprador" look="danger" size="xs" action="#{loteController.removeCompradorLista(compradorLote)}" update="outputPanelCompradores"></b:commandButton>
+														</p:panelGrid>
+														
+														<p:outputPanel id="panelTabela" autoUpdate="false">
+															<p:dataTable value="#{compradorLote.listParcelasComprador}" var="parcela" paginator="true"
+																paginatorPosition="bottom" rows="5">
+																<p:column headerText="Nº da parcela">
+																	<h:outputText value="#{parcela.numeroDaParcela}"></h:outputText>
+																</p:column>
+																<p:column headerText="valor da parcela">
+																	<h:outputText value="#{parcela.valorDaParcela}"></h:outputText>
+																</p:column>	
+																<p:column headerText="Data Vencimento">
+																	<h:outputText value="#{parcela.dataVencimento}">
+																		<f:convertDateTime pattern="dd-MM-yyyy" />
+																	</h:outputText>
+																</p:column>	
+																<p:column headerText="Ação" style="width:15%;">
+																	<center>
+																		<p:commandButton icon="ui-icon-pencil" onclick="PF('dlgEditParcela').show();">
+																			<f:setPropertyActionListener value="#{parcela.valorDaParcela}" target="#{loteController.valorDaParcelaDialog}"></f:setPropertyActionListener>
+																			<f:setPropertyActionListener value="#{parcela.numeroDaParcela}" target="#{loteController.numeroParcela}"></f:setPropertyActionListener>
+																		</p:commandButton>
+																		<p:commandButton icon="ui-icon-trash" action="#{loteController.excluirParcela(compradorLote, parcela.numeroDaParcela)}">
+																		</p:commandButton>
+																	</center>
+																</p:column>
+																
+																
+															</p:dataTable>		
+														</p:outputPanel>
+														
+													</h:panelGrid>
+												</p:tab>
+											</p:accordionPanel>
+										</p:outputPanel> <hr/>
+							
+									</div>
+								</div>
+							<hr />
+						</div>
+					</div>
+				</div>
+			</div>
+		  </p:tab>
+		</p:tabView>
+		
+		<p:outputPanel rendered="#{loteController.visaoDosDadosDoLote}">
+			<b:commandButton value="Salvar" action="#{loteController.salvarLote()}" update=":formLote:grwgeral" look="success"></b:commandButton>
+			<a href="list.faces" class="btn btn-default">Cancelar</a>
+		</p:outputPanel>
+		
+	</h:form>
+	<h:form>
+	
+	<p:dialog header="Editar Parcela" widgetVar="dlgEditParcela">
+		<h:form>
+			<p:outputPanel autoUpdate="true">
+				<p:panelGrid columns="2" styleClass="companyHeaderGrid">
+					<h:outputText value="Valor da parcela"></h:outputText>
+					<p:inputText value="#{loteController.valorDaParcelaDialog}"></p:inputText>		
+				</p:panelGrid>
+			</p:outputPanel>
+			<div class="modal-footer">
+				<b:commandButton value="Fechar" onclick="PF('dlgEditParcela').hide();return false;"> </b:commandButton>
+				<b:commandButton value="Editar" look="primary" action="#{loteController.editListaParcelas()}"></b:commandButton>
+			</div>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Dados da Compra" widgetVar="editCompras" modal="true">
+		<h:form>
+		<p:outputPanel autoUpdate="true">
+			<p:panelGrid columns="4" styleClass="companyHeaderGrid"
+						id="pnlcompra">
+						<h:outputText value="Data da compra"></h:outputText>
+						<p:calendar id="dataCompra"
+							value="#{loteController.loteBean.dataCompra}"
+							pattern="dd/MM/yyyy">
+						</p:calendar>
+
+						<h:outputText value="Tipo da compra"></h:outputText>
+						<p:selectOneMenu style="width:125px" filter="true"
+							id="tipoCompra" filterMatchMode="startsWith"
+							value="#{loteController.loteBean.tipoCompra}">
+							<f:selectItem itemLabel="" itemValue="" />
+							<f:selectItem itemLabel="NORMAL" itemValue="N" />
+							<f:selectItem itemLabel="DEFESA" itemValue="D" />
+							<p:ajax listener="#{loteController.calcularParcelas2}"
+								process="dataCompra tipoCompra"
+								update=":formLote:tabView:pnlcompra "></p:ajax>
+						</p:selectOneMenu>
+
+						<h:outputText value="Valor total"></h:outputText>
+						<p:inputText styleClass="col-md-8 col-xs-12" id="intot"
+							value="#{loteController.loteBean.valorTotal}">
+							<f:ajax execute="intot" event="blur"
+								listener="#{loteController.calculaTotalCompraPeloTotal()}"
+								render=":formLote:tabView:pnlcompra " />
+						</p:inputText>
+
+						<h:outputText value="Valor do lance"></h:outputText>
+						<p:inputText id="invlrlance" styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.valorLance}">
+							<f:ajax execute="invlrlance" event="blur"
+								listener="#{loteController.calculaTotalCompraPeloLance()}"
+								render=":formLote:tabView:pnlcompra " />
+						</p:inputText>
+
+						<h:outputText value="Nº de parcelas"></h:outputText>
+						<p:inputText id="innumparc" styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.numeroParcela}">
+							<f:ajax execute="innumparc" event="blur"
+								listener="#{loteController.calculaTotalCompraPelaParcela()}"
+								render=":formLote:tabView:pnlcompra " />
+						</p:inputText>
+
+						<h:outputText value="Valor de desconto"></h:outputText>
+						<p:inputText styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.valorDesconto}" />
+
+						<h:outputText value="Taxa de inscrição"></h:outputText>
+						<p:inputText styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.taxaInscricao}" />
+
+						<h:outputText value="Taxa antecipada"></h:outputText>
+						<p:inputText styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.taxaAntecipada}" />
+
+						<h:outputText value="Comissão do vendedor"></h:outputText>
+						<p:inputText styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.comissaoVendedor}" />
+
+						<h:outputText value="Comissão do comprador"></h:outputText>
+						<p:inputText styleClass="col-md-8 col-xs-12"
+							value="#{loteController.loteBean.comissaoComprador}" />
+				</p:panelGrid>
+				</p:outputPanel>
+				<div class="modal-footer">
+					<b:commandButton value="Fechar" onclick="PF('dlgEditParcela').hide();return false;"> </b:commandButton>
+					<b:commandButton value="Editar" look="primary" action="#{loteController.editListaParcelas()}"></b:commandButton>
+				</div>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Novo animal" widgetVar="dlgNovoAnimal" modal="true" width="800">
+		<ui:include src="../dialogs/novoanimaldialog.xhtml"></ui:include>
+	</p:dialog>
+	
+	<p:dialog header="Detalhes compra" widgetVar="dlgDetalhes" modal="true" width="800">
+		<p:panelGrid columns="4" styleClass="companyHeaderGrid" id="pnlcompra">
+			<h:outputText value="Data da compra"></h:outputText>				
+			<p:calendar id="dataCompra" value="#{loteController.loteBean.dataCompra}" pattern="dd/MM/yyyy">
+			</p:calendar>
+		
+			<h:outputText value="Tipo da compra"></h:outputText>				
+			<p:selectOneMenu style="width:125px" filter="true" id="tipoCompra"	filterMatchMode="startsWith" value="#{loteController.loteBean.tipoCompra}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItem itemLabel="NORMAL" itemValue="N" />
+					<f:selectItem itemLabel="DEFESA" itemValue="D" />
+				<p:ajax listener="#{loteController.calcularParcelas2}" process="dataCompra tipoCompra" update=":formLote:tabView:pnlcompra " ></p:ajax>	
+			</p:selectOneMenu>
+
+
+			<h:outputText value="Valor do lance"></h:outputText>				
+			<p:inputText id="invlrlance" styleClass="col-md-8 col-xs-12"  value="#{loteController.loteBean.valorLance}" >
+			<f:ajax execute="invlrlance" event="blur" listener="#{loteController.calculaTotalCompraPeloLance()}" render=":formLote:tabView:pnlcompra "/>
+			</p:inputText>
+
+			<h:outputText value="Nº de parcelas"></h:outputText>				
+			<p:inputText id="innumparc" styleClass="col-md-8 col-xs-12" value="#{loteController.loteBean.numeroParcela}">
+			<f:ajax execute="innumparc" event="blur" listener="#{loteController.calculaTotalCompraPelaParcela()}" render=":formLote:tabView:pnlcompra "/>					
+			</p:inputText>
+										
+			<h:outputText value="Valor total"></h:outputText>				
+			<p:inputText  styleClass="col-md-8 col-xs-12" id="intot" value="#{loteController.loteBean.valorTotal}" >
+			<f:ajax execute="intot" event="blur" listener="#{loteController.calculaTotalCompraPeloTotal()}" render=":formLote:tabView:pnlcompra "/>
+			</p:inputText>
+			
+
+			<h:outputText value="Valor de desconto"></h:outputText>				
+			<p:inputText styleClass="col-md-8 col-xs-12" value="#{loteController.loteBean.valorDesconto}" />
+
+			<h:outputText value="Taxa de inscrição"></h:outputText>				
+			<p:inputText styleClass="col-md-8 col-xs-12" value="#{loteController.loteBean.taxaInscricao}" />
+
+			<h:outputText value="Taxa antecipada"></h:outputText>
+			<p:inputText styleClass="col-md-8 col-xs-12" value="#{loteController.loteBean.taxaAntecipada}" />
+							
+			<h:outputText value="Comissão do vendedor"></h:outputText>	
+			<p:inputText styleClass="col-md-8 col-xs-12" value="#{loteController.loteBean.comissaoVendedor}" />
+
+			<h:outputText value="Comissão do comprador"></h:outputText>
+			<p:inputText styleClass="col-md-8 col-xs-12" value="#{loteController.loteBean.comissaoComprador}" />
+					
+		</p:panelGrid>
+		<div class="modal-footer">
+			<b:commandButton value="Fechar" onclick="PF('dlgDetalhes').hide();return false;"> </b:commandButton>
+			<b:commandButton value="Editar" look="primary"></b:commandButton>
+		</div>
+	</p:dialog>
+
+	</h:form>
+	<p:dialog header="Atenção" widgetVar="dlgExcluirLote" minHeight="40" modal="true">
+		<h:form>
+			<div class="modal-body">
+				<h:outputText value="Deseja realmente excluir este lote ?" />
+			</div>
+			<div class="modal-footer">
+				<b:commandButton value="Fechar"></b:commandButton>
+				<b:commandButton value="Excluir" look="danger" action="#{loteController.excluirLote()}"></b:commandButton>
+			</div>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Novo Vendedor" widgetVar="novoVendedorDlg" modal="true">
+		<ui:include src="/pages/dialogs/novoVendedorDialog.xhtml"></ui:include>
+	</p:dialog>
+	
+	<p:dialog header="Novo Comprador" widgetVar="novoCompradorDlg" modal="true">
+		<ui:include src="/pages/dialogs/novoCompradorDialog.xhtml"></ui:include>
+	</p:dialog>
+	
+	<p:dialog header="Parcelas Comprador" widgetVar="dlgParcelas">
+		<h:form>
+			<p>Parcelas here..</p>	
+			<p:outputPanel autoUpdate="true">
+				<p:dataTable value="#{loteController.listaDeCompradoresLote}"></p:dataTable>			
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+	
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

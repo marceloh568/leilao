@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!--  <link rel="icon" href="../../favicon.ico"> -->
+
+        <title>Login - Agreste Leilão</title>
+
+        <link href="../../novoCss/siimm.css" rel="stylesheet" />
+        <link href="../../novoCss/bootstrap.min.css" rel="stylesheet" />       
+
+    </h:head>
+
+    <h:body>
+		<b:navBar brand="Agreste Leilão" brandHref="#" fixed="top">
+			<b:navbarLinks>
+			</b:navbarLinks>
+		</b:navBar>
+
+		<div class="form-signin">
+			 <h:form>
+				<h2 class="form-signin-heading">Acesse sua conta</h2>
+				<h:panelGroup rendered="#{param['erro'] != null}">
+					<div id="msg" class="alert alert-danger" role="alert">cpf ou senha incorretos!</div>
+				</h:panelGroup>
+				<p:inputMask style="padding:10px;" placeholder="CPF" mask="999-999-999-99" value="#{MBUsuarios.usuario.cpf}"></p:inputMask>
+				<p:inputText style="padding:10px;" placeholder="Senha" type="password" value="#{MBUsuarios.usuario.senha}"></p:inputText>
+				<div class="checkbox">
+					<label class="checkbox"> 
+						<input type="checkbox" id="remember-me" name="remember-me" checked="checked" /> Mantenha-me conectado.
+					</label>
+				</div>
+				<p class="pull-right">
+					<a href="/paydomestic/recuperar">Esqueceu sua senha?</a>
+				</p>
+	            <b:commandButton value="Entrar" look="primary" action="#{MBUsuarios.acess}"></b:commandButton>
+				<br />
+			</h:form>
+		</div>
+        <div class="container">
+            <p:outputPanel id="outExpired" autoUpdate="false">
+                <p:dialog widgetVar="expiredSession" modal="true" header="Atenção" showEffect="bounce" 
+                    resizable="false" visible="false">
+                    <h:form id="formEXP">
+                        <h:panelGrid columns="1">
+                            <div class="alert alert-info" role="alert">
+                                A sessão expirou! Faça login novamente.
+                            </div>
+                            <p:commandButton value="OK" style="font-size:14px;" action="#{MBUsuarios.fecharDlgExpired()}" process="@this" />
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </p:outputPanel>
+
+            <footer>
+                <hr />
+                <p>&copy; MakeCode</p>
+                <p class="small">Versão: 1.0.0</p>
+            </footer>
+        </div>
+    </h:body>
+</html>

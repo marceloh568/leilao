@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templateLeilao.xhtml">
+		<ui:define name="conteudo">
+	    <script type="text/javascript">
+					$(function(){
+						$("#liLeilao").addClass("active");
+					});
+		</script>
+		<h:form id="formLogin" enctype="multipart/form-data">
+
+		<div class="container">
+			<!-- Example row of columns -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">Geral</div>
+						<div class="panel-body">
+							 <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
+								<h:outputText value="Nome"></h:outputText>
+								<p:inputText id="nome" value="#{homeController.homeLeilaoBean.nome}" styleClass="ui-grid-col-10" />
+								<h:outputText value="Leiloeiro"></h:outputText>
+								<p:inputText id="leiloeiro" styleClass="ui-grid-col-10"
+									value="#{homeController.homeLeilaoBean.leiloeiro}" />
+								<h:outputText value="Gerente"></h:outputText>
+								<p:inputText id="gerente" styleClass="ui-grid-col-10"
+									value="#{homeController.homeLeilaoBean.gerente}" />
+								<h:outputText value="Data"></h:outputText>
+								<p:calendar value="#{homeController.homeLeilaoBean.data}"></p:calendar>
+								<h:outputText value="Endereço"></h:outputText>
+								<p:inputText id="endereco" styleClass="ui-grid-col-10"
+									value="#{homeController.homeLeilaoBean.endereco}"></p:inputText>
+								<h:outputText value="Bairro"></h:outputText>
+								<p:inputText id="bairro" 
+									value="#{homeController.homeLeilaoBean.bairro}" />
+								<h:outputText value="Cidade"></h:outputText>
+								<p:inputText id="cidade" 
+									value="#{homeController.homeLeilaoBean.cidade}"></p:inputText>
+								<h:outputText value="UF"></h:outputText>
+								<p:selectOneMenu style="width:125px" id="uf" filter="true"
+									filterMatchMode="startsWith"
+									value="#{homeController.homeLeilaoBean.uf}">
+									<f:selectItem itemLabel="--" itemValue="" />
+									<f:selectItem itemLabel="AC" itemValue="AC" />
+									<f:selectItem itemLabel="AL" itemValue="AL" />
+									<f:selectItem itemLabel="AP" itemValue="AP" />
+									<f:selectItem itemLabel="AM" itemValue="AM" />
+									<f:selectItem itemLabel="BA" itemValue="BA" />
+									<f:selectItem itemLabel="CE" itemValue="CE" />
+									<f:selectItem itemLabel="DF" itemValue="DF" />
+									<f:selectItem itemLabel="ES" itemValue="ES" />
+									<f:selectItem itemLabel="GO" itemValue="GO" />
+									<f:selectItem itemLabel="MA" itemValue="MA" />
+									<f:selectItem itemLabel="MT" itemValue="MT" />
+									<f:selectItem itemLabel="MS" itemValue="MS" />
+									<f:selectItem itemLabel="MG" itemValue="MG" />
+									<f:selectItem itemLabel="PR" itemValue="PR" />
+									<f:selectItem itemLabel="PB" itemValue="PB" />
+									<f:selectItem itemLabel="PA" itemValue="PA" />
+									<f:selectItem itemLabel="PE" itemValue="PE" />
+									<f:selectItem itemLabel="PI" itemValue="PI" />
+									<f:selectItem itemLabel="RJ" itemValue="RJ" />
+									<f:selectItem itemLabel="RN" itemValue="RN" />
+									<f:selectItem itemLabel="RS" itemValue="RS" />
+									<f:selectItem itemLabel="RO" itemValue="RO" />
+									<f:selectItem itemLabel="SC" itemValue="SC" />
+									<f:selectItem itemLabel="SE" itemValue="SE" />
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<f:selectItem itemLabel="TO" itemValue="TO" />
+								</p:selectOneMenu>
+								<h:outputText value="Ativo"></h:outputText>
+								<p:selectBooleanCheckbox
+									value="#{homeController.homeLeilaoBean.ativo}" />
+								<h:outputText value="Fechado"></h:outputText>
+								<p:selectBooleanCheckbox value="#{homeController.homeLeilaoBean.fechado}" />
+								
+							</p:panelGrid>
+						
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="panel panel-info">
+						<div class="panel-heading">Percentuais</div>
+						<div class="panel-body">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
+								<h:outputText value="Utiliza Taxa de inscrição"></h:outputText> 
+								<p:inputText id="taxaInscricao"	onfocus="jQuery('#taxaInscricao').maskMoney();"/>
+								<h:outputText value="Comissão vendedor"></h:outputText>
+								<p:inputText id="comissaoVendedor"									
+											value="#{homeController.homeLeilaoBean.comissaoVendedor}" />
+								<h:outputText value="Nº parcelas"></h:outputText>			
+								<p:inputText id="numeroParcelas" 
+								value="#{homeController.homeLeilaoBean.numeroParcela}"></p:inputText>
+								<h:outputText value="Comissão comprador"></h:outputText>
+								<p:inputText id="comissaoComprador"
+											value="#{homeController.homeLeilaoBean.comissaoComprador}" />
+								<h:outputText value="Comissão vendedores embutida no valor da inicial"></h:outputText>
+								<p:selectBooleanCheckbox value="#{homeController.homeLeilaoBean.utilizaComissaoVendedor}" />
+							</p:panelGrid>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">Parcelas</div>
+						<div class="panel-body">
+							<b:button style="margin-top:20px;font-size:12px;" value="Nova Parcela" 
+									icon="plus"	onclick="PF('dlgNovaParcela').show();return false;"></b:button>
+								<hr />
+								<p:outputPanel autoUpdate="true">
+									<p:dataTable id="tabelaParcelasLeilao"
+										value="#{homeController.homeLeilaoBean.agruparParcelas}"
+										var="parcela">
+										<p:column headerText="Agrupar parcela">
+											<h:outputText value="#{parcela.agruparParcela}"></h:outputText>
+										</p:column>
+										<p:column headerText="Ação" styleClass="col-md-1">
+											<center>
+												<p:commandButton icon="ui-icon-trash"
+													action="#{homeController.removerParcelaLeilao()}">
+													<f:setPropertyActionListener value="#{parcela}"
+														target="#{homeController.agruparParcelas}"></f:setPropertyActionListener>
+												</p:commandButton>
+											</center>
+										</p:column>
+									</p:dataTable>
+								</p:outputPanel>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="panel panel-info">
+						<div class="panel-heading">Totais</div>
+						<div class="panel-body">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
+								<h:outputText value="Total vendido"></h:outputText>
+								<p:inputText id="totalVendido" 
+											value="#{homeController.homeLeilaoBean.totalVendido}" />
+								<h:outputText value="Total comissão"></h:outputText>			
+								<p:inputText id="totalComissao"
+											
+											value="#{homeController.homeLeilaoBean.totalComissao}" />
+								<h:outputText value="Total taxa inscrição"></h:outputText>			
+								<p:inputText id="totalTaxaInscricao"
+											value="#{homeController.homeLeilaoBean.totalTaxaInscricao}" />
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="panel panel-info">
+						<div class="panel-heading">Imagem</div>
+						<div class="panel-body">
+							<p:fileUpload
+									fileUploadListener="#{homeController.uploadImagemLeilao}"
+									auto="true" sizeLimit="1000000" />
+
+<!-- 								<p:graphicImage value="/img/7.jpg" cache="false" /> -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+						<br />
+						<div class="col-sm-offset-2">
+							<b:commandButton value="Salvar" look="success" update="grid"
+								action="#{homeController.salvarHomeLeilao()}" />
+							<a href="list.faces" class="btn btn-default">Cancelar</a>
+						</div>
+
+					<p:dialog header="Nova Parcela" widgetVar="dlgNovaParcela"
+						modal="true">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="totalTaxaInscricao"
+									class="col-xs-12 col-sm-5 col-md-5 col-lg-5 control-label">Agrupar
+									Parcela</label>
+								<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+									<p:inputText
+										value="#{homeController.agruparParcelas.agruparParcela}"></p:inputText>
+								</div>
+							</div>
+						</div>
+						<br />
+						<div class="modal-footer">
+							<b:commandButton value="Fechar"
+								onclick="PF('dlgNovaParcela').hide();return false;"></b:commandButton>
+							<b:commandButton value="Incluir" look="success"
+								action="#{homeController.adicionarParcelaLeilao()}"></b:commandButton>
+						</div>
+					</p:dialog>
+			</h:form>
+	
+</ui:define>
+</ui:composition>
+
+</h:body>
+</html>

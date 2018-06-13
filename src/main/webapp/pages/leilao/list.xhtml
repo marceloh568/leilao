@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h4>Gerenciamento Leilões</h4>
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<a href="form.faces" class="btn btn-primary">Novo Leilão</a>
+						<h:form>
+							<p:dataTable var="leilao" value="#{leilaoController.findAll()}" paginator="true" paginatorPosition="bottom" rows="5"
+								style="margin-top:20px" emptyMessage="Não há leilões cadastrados">
+								<f:facet name="header">
+	            					Lista de leilões
+	        					</f:facet>
+	        					
+	        					<p:column headerText="Data" style="text-align:left;" styleClass="col-md-2">
+									<h:outputText value="#{leilao.data}" style="text-align:left;">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="Nome">
+									<h:outputText value="#{leilao.nome}" />
+								</p:column>
+	
+								<p:column headerText="Leiloeiro">
+									<h:outputText value="#{leilao.leiloeiro}" />
+								</p:column>
+								
+								<p:column headerText="Ativo">
+									<h:outputText value="ATIVO" style="color:#00ff00" rendered="#{leilao.ativo == true}" />
+									<h:outputText value="INATIVO" rendered="#{leilao.ativo == false}" />
+								</p:column>
+	
+								<p:column headerText="Ação" styleClass="col-md-2">
+									<center>
+										<p:commandButton icon="ui-icon-pencil" action="#{leilaoController.redirectEdit()}">
+											<f:setPropertyActionListener value="#{leilao.id}" target="#{leilaoController.leilaoBean.id}"></f:setPropertyActionListener>
+										</p:commandButton>
+										<p:commandButton onclick="PF('dlgExcluirLeilao').show();" icon="ui-icon-trash">
+											<f:setPropertyActionListener value="#{leilao.id}" target="#{leilaoController.leilaoBean.id}"></f:setPropertyActionListener>
+										</p:commandButton>	
+									</center>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+						
+						<p:dialog header="Atenção" widgetVar="dlgExcluirLeilao" minHeight="40"
+							modal="true">
+							<h:form>
+							<div class="modal-body">
+								<h:outputText value="Deseja realmente excluir este leilão ?" />
+							</div>
+							<div class="modal-footer">
+								<b:commandButton value="Fechar"></b:commandButton>
+								<b:commandButton value="Excluir" look="danger" action="#{leilaoController.deletarLeilao()}"></b:commandButton>
+							</div>
+							</h:form>
+						</p:dialog>
+						
+					</div>
+				</div>
+			</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+ <h:form>
+ <p:outputPanel  autoUpdate="true">
+ <p:tabView>
+				<p:tab title="Dados">
+					<div class="ui-fluid">
+   			 			 <p:panelGrid columns="4">
+								<h:outputText value="Nome"></h:outputText>
+								<b:inputText  required="true" requiredMessage="Nome obrigátorio" value="#{loteController.animaledit.nome}" />
+
+								<h:outputText value="Raça"></h:outputText>
+								<b:selectOneMenu  required="true" requiredMessage="Raça obrigatório" value="#{loteController.animaledit.racaBean.id}" >
+									<f:selectItems value="#{racaController.findAll()}" var="raca" itemLabel="#{raca.nome}" itemValue="#{raca.id}"></f:selectItems>
+								</b:selectOneMenu>
+								
+								<h:outputText value="Pelagem"></h:outputText>
+								<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.pelagem}" />
+								
+								<h:outputText value="Nascimento"></h:outputText>
+								<p:calendar value="#{loteController.animaledit.dataNascimento}" />
+								
+								<h:outputText value="Nº Registro"></h:outputText>
+								<p:inputText styleClass="col-md-3" value="#{loteController.animaledit.numeroDeRegistro}" />
+						
+								<h:outputText value="Nº Controle"></h:outputText>
+								<p:inputText styleClass="col-md-3" value="#{loteController.animaledit.numeroDeControle}" />
+
+								<h:outputText value="Sexo"></h:outputText>
+								<p:selectOneRadio value="#{loteController.animaledit.sexo}">
+										<f:selectItem itemLabel="Masculino" itemValue="M" />
+										<f:selectItem itemLabel="Feminino" itemValue="F" />
+								</p:selectOneRadio>
+
+								<h:outputText value="Criador"></h:outputText>
+								<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.criador}" />
+
+							</p:panelGrid>
+						</div>
+					</p:tab>
+					<p:tab title="Geneologia">
+								<div class="row">
+									<p class="col-md-offset-1 col-xs-12 col-sm-3 col-md-3 col-lg-3 text-primary">Geneologia Pai</p>
+								</div>
+								<div class="ui-fluid">
+   			 			 			<p:panelGrid columns="4">
+											<h:outputText value="Pai"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaPai.pai}" />
+											
+											<h:outputText value="Avô"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaPai.avoMasculino}" />
+								
+											<h:outputText value="Avó"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaPai.avoFeminino}" />
+											
+											<h:outputText value="Bisavô"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaPai.bisavoMasculino}" />
+
+											<h:outputText value="Bisavó"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaPai.bisavoFeminino}" />
+									</p:panelGrid>
+									
+									<div class="row">
+										<p class="col-md-offset-1 col-xs-12 col-sm-3 col-md-3 col-lg-3 text-primary">Geneologia Mãe</p>
+									</div>
+									<p:panelGrid columns="4">
+											<h:outputText value="Pai"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaMae.mae}" />
+											
+											<h:outputText value="Avô"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaMae.avoMasculino}" />
+											
+											<h:outputText value="Avó"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaMae.avoFemenino}" />
+								
+											<h:outputText value="Bisavô"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaMae.bisavoMasculino}" />
+
+											<h:outputText value="Bisavó"></h:outputText>
+											<p:inputText styleClass="col-md-6" value="#{loteController.animaledit.geneologiaMae.bisavoFemenino}" />
+									</p:panelGrid>
+								</div>
+							</p:tab>
+						</p:tabView> 
+						</p:outputPanel>
+						<hr/>
+						<div class="col-sm-offset-2">
+							<p:commandButton value="Salvar"   action="#{loteController.alterarAnimalDaLista()}"/>
+							<p:commandButton value="Cancelar"  onclick="PF('dlgNovoAnimal').hide()"/>
+							
+    					</div>
+ 
+ </h:form> 
+ </h:body>
+ </html>

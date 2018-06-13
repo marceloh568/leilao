@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+	
+			<ol class="breadcrumb">
+				<li><a href="home.faces">Home</a></li>
+				<li class="active"><a href="#">Meus leilões</a></li>
+			</ol>
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h4>Selecione o leilão</h4>
+						<hr/>
+					</div>
+					<div class="ui-fluid">
+					 	<ui:repeat var="leilao" value="#{leilaoController.findAll()}" varStatus="status">
+							<p:commandLink action="#{homeController.selectLeilao(leilao)}">
+								<div class="bs-callout bs-callout-primary">
+									<h4>#{leilao.nome}</h4>
+									<h:outputText value="#{leilao.data} + Ativo" rendered="#{leilao.ativo}" ></h:outputText>
+								</div>
+							</p:commandLink>
+						</ui:repeat>
+					</div>
+				</div>
+			</div>
+			
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

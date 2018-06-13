@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h4>Gerenciamento Compradores/Vendedores</h4>
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<a href="form.faces" class="btn btn-primary">Novo vendedor</a>
+						<h:form>
+							<p:dataTable var="vendedor" value="#{vendedorController.findAll()}" paginator="true" paginatorPosition="bottom" rows="5"
+								style="margin-top:20px">
+								<f:facet name="header">
+	            					Lista de raças
+	        					</f:facet>
+								<p:column headerText="Nome">
+									<h:outputText value="#{vendedor.nome}" />
+								</p:column>
+	
+								<p:column headerText="CPF/CGC">
+									<h:outputText value="#{vendedor.cpfcgc}" />
+								</p:column>
+								
+								<p:column headerText="Email">
+									<h:outputText value="#{vendedor.email}" />
+								</p:column>
+	
+								<p:column headerText="Ação" styleClass="col-md-2">
+									<center>
+										<p:commandButton icon="ui-icon-pencil" action="#{vendedorController.redirectEdit()}">
+											<f:setPropertyActionListener value="#{vendedor.id}" target="#{vendedorController.vendedorBean.id}"></f:setPropertyActionListener>
+										</p:commandButton>
+										<p:commandButton icon="ui-icon-trash" onclick="PF('dlgExcluirVendedor').show();">
+											<f:setPropertyActionListener value="#{vendedor.id}" target="#{vendedorController.vendedorBean.id}"></f:setPropertyActionListener>
+										</p:commandButton>	
+									</center>
+								</p:column>
+							</p:dataTable>
+							
+						</h:form>
+						<p:dialog header="Atenção" widgetVar="dlgExcluirVendedor" minHeight="40"
+							modal="true">
+							<h:form>
+							<div class="modal-body">
+								<h:outputText value="Deseja realmente excluir este vendedor ?" />
+							</div>
+							<div class="modal-footer">
+								<b:commandButton value="Fechar"></b:commandButton>
+								<b:commandButton value="Excluir" look="danger" action="#{vendedorController.excluirVendedor()}"></b:commandButton>
+							</div>
+							</h:form>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+ </h:head>
+ 	
+ <h:body>
+ 
+	<ui:composition template="templatesistemas.xhtml">
+		<ui:define name="body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div  class="sub-header">
+						<h4> #{homeController.retornoLeilaoEscolhido().getNome()}</h4>
+						
+					</div>
+					<hr/>
+					<div class="ui-fluid">
+						<div class="row">
+							<div class="container">
+							<ul class="nav nav-pills">
+								<h:panelGroup rendered="#{param['dados'] == true}">
+									<li role="presentation" id="liLeilao" class="active"><a href="../home/dados.faces?dados=true">Dados do leilão</a></li>
+								</h:panelGroup>
+								
+								<h:panelGroup rendered="#{param['dados'] == null}">
+									<li role="presentation" id="liLeilao"><a href="../home/dados.faces?dados=true">Dados do leilão</a></li>
+								</h:panelGroup>
+								
+								<h:panelGroup rendered="#{param['lotes'] == true}">
+									<li role="presentation" class="active" id="liLote"><a href="../home/lotes.faces?lotes=true">Lotes do leilão</a></li>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{param['lotes'] == null}">
+									<li role="presentation" id="liLote"><a href="../home/lotes.faces?lotes=true">Lotes do leilão</a></li>
+								</h:panelGroup>
+								<li role="presentation"><a href="#">Lançes do leilão</a></li>
+							
+							</ul> <hr/>
+						</div>
+						</div>
+						<div class="row">
+							<div class="container">	
+								<ui:insert name="conteudo" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

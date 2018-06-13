@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{racaController.getEditarRaca()}" />
+			</f:metadata>
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h:panelGroup rendered="#{param['id'] == null}">
+								<h4>Cadastro Raça</h4>
+						</h:panelGroup>  
+						<h:panelGroup rendered="#{param['id'] != null}">
+								<h4>Editar Raça</h4>
+						</h:panelGroup> 
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<h:form id="formRaca" >
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label for="nome" class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Nome</label>
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+										<b:inputText id="nome" maxlength="30" value="#{racaController.racaBean.nome}" required="true" requiredMessage="Nome obrigatório"></b:inputText>
+										<p:message for="nome"></p:message>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="criacao" class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Criação</label>
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										 <b:selectBooleanCheckbox  id="criacao" value="#{racaController.racaBean.criacao}" />
+									</div>
+								</div>
+								 <div class="form-group">
+									<label for="tipoAnimal" class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Tipo de Animal</label>
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										 <b:selectOneMenu id="tipoAnimal" style="width:125px" value="#{racaController.racaBean.tipoCriacao}" required="true" requiredMessage="Tipo obrigatório">
+											<f:selectItem itemLabel="--" itemValue="" />
+											<f:selectItem itemLabel="Equino" itemValue="equino" />
+											<f:selectItem itemLabel="Bovino" itemValue="bovino" />
+											<f:selectItem itemLabel="Caprino" itemValue="caprino" />
+											<f:selectItem itemLabel="Ovino" itemValue="ovino" />
+											<f:selectItem itemLabel="Ave" itemValue="ave" />
+										</b:selectOneMenu>
+										<p:message for="tipoAnimal"></p:message>
+									</div>
+								 </div>
+								
+								<div class="col-sm-offset-2">
+									<b:commandButton value="Salvar" look="success" id="btnSalvar" update="nome" action="#{racaController.salvar()}"/>
+									<a href="list.faces" class="btn btn-default">Cancelar</a>
+								</div>
+								
+							</div>
+						</h:form>		
+					</div>
+				</div>
+			</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

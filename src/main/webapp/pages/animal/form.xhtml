@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{animalController.getEditAnimal()}" />
+			</f:metadata>
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h:panelGroup rendered="#{param['id'] == null}">
+								<h4>Cadastro Animal</h4>
+						</h:panelGroup>  
+						<h:panelGroup rendered="#{param['id'] != null}">
+								<h4>Editar Cadastro Animal</h4>
+						</h:panelGroup> 
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<h:form id="formAnimal">
+							<p:tabView>
+								<p:tab title="Dados">
+									<div class="form-horizontal">
+										<div class="form-group">
+											<label for="numero"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Nome</label>
+											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+												<b:inputText id="nome" required="true" requiredMessage="Nome obrigátorio" value="#{animalController.animalBean.nome}" />
+												<p:message for="nome"></p:message>
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Raça</label>
+											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+												<b:selectOneMenu id="raca" required="true" requiredMessage="Raça obrigatório" value="#{animalController.animalBean.racaBean.id}" >
+													<f:selectItems value="#{racaController.findAll()}" var="raca" itemLabel="#{raca.nome}" itemValue="#{raca.id}"></f:selectItems>
+												</b:selectOneMenu>
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Pelagem</label>
+											<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+												<p:inputText styleClass="col-md-6" value="#{animalController.animalBean.pelagem}" />
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Data
+												Nascimento</label>
+											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+												<p:calendar value="#{animalController.animalBean.dataNascimento}" />
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Número
+												de registro</label>
+											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+												<p:inputText styleClass="col-md-3" value="#{animalController.animalBean.numeroDeRegistro}" />
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Número
+												de controle</label>
+											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+												<p:inputText styleClass="col-md-3" value="#{animalController.animalBean.numeroDeControle}" />
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Sexo</label>
+											<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+												<p:selectOneRadio value="#{animalController.animalBean.sexo}">
+													<f:selectItem itemLabel="Masculino" itemValue="M" />
+													<f:selectItem itemLabel="Feminino" itemValue="F" />
+												</p:selectOneRadio>
+											</div>
+										</div>
+	
+										<div class="form-group">
+											<label for="descricao"
+												class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Criador</label>
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+												<p:inputText styleClass="col-md-6" value="#{animalController.animalBean.criador}" />
+											</div>
+										</div>
+									</div>
+							  	 </p:tab>
+							  	 <p:tab title="Geneologia">
+								  	 <div class="form-horizontal">
+								  	 
+								  	 	<div class="row">
+												<p class="col-md-offset-1 col-xs-12 col-sm-3 col-md-3 col-lg-3 text-primary">Geneologia Pai</p>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Pai</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													 <p:autoComplete value="#{animalController.animalBean.geneologiaPai.pai}" 
+															  					completeMethod="#{loteController.completeTextPai}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Avô</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													 <p:autoComplete value="#{animalController.animalBean.geneologiaPai.avoMasculino}" 
+															  					completeMethod="#{loteController.completeTextAvoPai}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Avó</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													  <p:autoComplete value="#{animalController.animalBean.geneologiaPai.avoFeminino}" 
+															  					completeMethod="#{loteController.completeTextAvoFPai}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Bisavô</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													<p:inputText styleClass="col-md-6" value="#{animalController.animalBean.geneologiaPai.bisavoMasculino}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Bisavó</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													<p:inputText styleClass="col-md-6" value="#{animalController.animalBean.geneologiaPai.bisavoFeminino}" />
+												</div>
+											</div>
+											<div class="row">
+												<p class="col-md-offset-1 col-xs-12 col-sm-3 col-md-3 col-lg-3 text-primary">Geneologia Mãe</p>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Mãe</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													  <p:autoComplete value="#{animalController.animalBean.geneologiaMae.mae}" 
+															  					completeMethod="#{loteController.completeTextMae}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Avô</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													 <p:autoComplete value="#{animalController.animalBean.geneologiaMae.avoMasculino}" 
+															  					completeMethod="#{loteController.completeTextAvoMae}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Avó</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													 <p:autoComplete value="#{animalController.animalBean.geneologiaMae.avoFemenino}" 
+															  					completeMethod="#{loteController.completeTextAvoFMae}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Bisavô</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													<p:inputText styleClass="col-md-6" value="#{animalController.animalBean.geneologiaMae.bisavoMasculino}" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Bisavó</label>
+												<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+													<p:inputText styleClass="col-md-6"  value="#{animalController.animalBean.geneologiaMae.bisavoFemenino}" />
+												</div>
+											</div>
+									</div>
+								</p:tab>
+								</p:tabView> <hr/>
+								<div class="col-sm-offset-2">
+									<b:commandButton value="Salvar" look="success" update="grid" action="#{animalController.salvarAnimal()}"/>
+									<a href="list.faces" class="btn btn-default">Cancelar</a>
+								</div>
+							</h:form>		
+						</div>
+					</div>
+				</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

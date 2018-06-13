@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h4>Gerenciamento Animal</h4>
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<a href="form.faces" class="btn btn-primary">Novo Animal</a>
+						<h:form>
+							<p:dataTable var="animal" value="#{animalController.findAll()}" paginator="true" paginatorPosition="bottom" rows="5"
+								style="margin-top:20px">
+								<f:facet name="header">
+	            					Lista de animais
+	        					</f:facet>
+								<p:column headerText="Nome">
+									<h:outputText value="#{animal.nome}" />
+								</p:column>
+	
+								<p:column headerText="Criador">
+									<h:outputText value="#{animal.criador}" />
+								</p:column>
+								<p:column headerText="Ação" styleClass="col-md-2">
+									<center>
+										<p:commandButton icon="ui-icon-pencil" action="#{animalController.redirectEdit()}">
+											<f:setPropertyActionListener value="#{animal.id}" target="#{animalController.animalBean.id}"></f:setPropertyActionListener>
+										</p:commandButton>
+										<p:commandButton onclick="PF('dlgExcluirAnimal').show();" icon="ui-icon-trash">
+											<f:setPropertyActionListener value="#{animal}" target="#{animalController.animalBean}"></f:setPropertyActionListener>
+										</p:commandButton>	
+									</center>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+						<p:dialog header="Atenção" widgetVar="dlgExcluirAnimal" minHeight="40" modal="true">
+							<h:form>
+								<div class="modal-body">
+									<h:outputText value="Deseja realmente excluir este animal ?" />
+								</div>
+								<div class="modal-footer">
+									<b:commandButton value="Fechar"></b:commandButton>
+									<b:commandButton value="Excluir" look="danger" action="#{animalController.excluirAnimal()}"></b:commandButton>
+								</div>
+							</h:form>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>

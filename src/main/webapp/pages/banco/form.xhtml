@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"> 
+ <h:head>
+  	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ </h:head>
+ 	
+ <h:body>
+	<ui:composition template="../../template/templatesistemas.xhtml">
+		<ui:define name="body">
+
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{bancoController.preViewEditBanco()}" />
+			</f:metadata>
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="sub-header">
+						<h:panelGroup rendered="#{param['id'] == null}">
+								<h4>Cadastro Banco</h4>
+						</h:panelGroup>  
+						<h:panelGroup rendered="#{param['id'] != null}">
+								<h4>Editar Banco</h4>
+						</h:panelGroup> 
+						<hr/>
+					</div>
+					<div class="ui-fluid" >
+						<h:form id="formLogin">
+							<div class="form-horizontal">
+								
+								<div class="form-group">
+									<label for="numero" class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Número</label>
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+										<b:inputText id="numero" value="#{bancoController.bancoBean.numero}" maxlength="3" required="true" requiredMessage="Número obrigatório" />
+										<p:message for="numero" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="descricao" class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">Descrição</label>
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+										<b:inputText id="descricao" value="#{bancoController.bancoBean.descricao}" maxlength="80" required="true" requiredMessage="Descrição obrigatório" />
+										<p:message for="descricao" />
+									</div>
+								</div>
+								
+								<div class="col-sm-offset-2">
+									<b:commandButton value="Salvar" look="success" update="grid" action="#{bancoController.salvar()}"/>
+									<a href="list.faces" class="btn btn-default">Cancelar</a>
+									
+								</div>
+								
+							</div>
+						</h:form>		
+					</div>
+				</div>
+			</div>
+	</ui:define>
+	</ui:composition>
+ </h:body>
+ </html>
